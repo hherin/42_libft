@@ -12,7 +12,7 @@ void ft_bzero(void *s, size_t n)
 	ft_memset(s, 0, n);
 }
 
-void *ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
+void *ft_memcpy(void *dst, const void *src, size_t n)
 {
 	for (size_t i = 0; i < n; i++)
 		((char*)dst)[i] = ((char*)src)[i];
@@ -40,13 +40,9 @@ int ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	char *s1_cpy = (char*)s1, *s2_cpy = (char*)s2;
 
-	while (n-- > 0 && *s1_cpy && *s2_cpy){
-		printf("n = %zu %c - %c\n", n, *s1_cpy, *s2_cpy);
-		if (ft_strncmp(s1_cpy, s2_cpy, 1)){
-			printf("diff %c - %c\n", *s1_cpy, *s2_cpy);
-			return *s1_cpy < *s2_cpy ? -1 : 1;
-		}
-	}
+	while (n--)
+		if (ft_strncmp(s1_cpy++, s2_cpy++, 1))
+			return (unsigned char)s1_cpy[-1] < (unsigned char)s2_cpy[-1] ? -1 : 1;
 	return 0;
 }
 
@@ -58,4 +54,28 @@ void *ft_memchr(const void *s, int c, size_t n)
 	while (--n && *r != (char)c)
 		r++;
 	return (*r == (char)c) ? r : NULL;
+}
+
+void *ft_memccpy(void *dst, const void *src, int c, size_t n)
+{
+	const char *str_src = src;
+    char *str_dst = dst;
+
+	while (n--)
+	{
+		*str_dst++ = *str_src++;
+		if ((unsigned char)str_src[-1] == (unsigned char)c)
+			return (void*)str_dst;		
+	}
+	return NULL;
+}
+
+void *ft_calloc(size_t count, size_t size)
+{
+	char *new;
+
+	if (!(new = malloc(count * size)))
+		return NULL;
+	ft_memset(new, 0, size * count);
+	return new;
 }

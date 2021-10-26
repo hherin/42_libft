@@ -1,10 +1,12 @@
 NAME=	libft.a
 
 SRCS=	./srcs/is_type.c \
-		./srcs/string.c \
+		./srcs/stringh.c \
 		./srcs/memstr.c \
 		./srcs/strsearch.c \
 		./srcs/converter.c \
+		./srcs/alloc_string.c \
+		./srcs/ft_split.c
 
 LIBC_TEST= ./test/main.c
 
