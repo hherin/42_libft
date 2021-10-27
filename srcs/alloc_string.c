@@ -41,3 +41,24 @@ char *ft_strtrim(char const *s1, char const *set)
 	return ft_substr(s1, 0, end + 1);
 }
 
+char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{	
+	int i = 0;
+	char *new;
+
+	if (!s || (!(new = ft_calloc(sizeof(char), ft_strlen(s) + 1))))
+		return NULL;
+	while (*s){
+		new[i] = (*f)(i, *s++);
+		i++;
+	}
+	return new;
+}
+
+void ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	size_t i = -1;
+
+	while (++i < ft_strlen(s))
+		(*f)(i, &s[i]);
+}
